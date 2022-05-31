@@ -79,30 +79,33 @@ class StaffList extends Component {
 			<div className="container mt-3">
 				<div className="row justify-content-between">{StaffList}</div>
 				<button
-					onClick={() => {
-						this.handleResetLayout();
+					data-index="1"
+					onClick={(e) => {
+						this.handleResetLayout(e);
 					}}
 					className="btn btn-primary mt-2 mr-5">
 					Reset Layout
 				</button>
 				<button
-					onClick={() => {
-						this.handleChangeToOneColLayout();
+					data-index="2"
+					onClick={(e) => {
+						this.handleChangeToOneColLayout(e.target.dataset);
 					}}
 					className="btn btn-success mt-2">
 					1 Column layout
 				</button>
 				<button
-					onClick={() => {
-						this.handleChangeToTwoColLayout();
+					data-index="3"
+					onClick={(e) => {
+						this.handleChangeToTwoColLayout(e.target.dataset);
 					}}
 					className="btn btn-warning mt-2 ml-5">
 					2 Columns layout
 				</button>
 				<button
+					data-index="4"
 					onClick={(e) => {
-						console.log(e.target);
-						this.handleChangeToThreeColLayout();
+						this.handleChangeToThreeColLayout(e.target.dataset);
 					}}
 					className="btn btn-info mt-2 ml-5">
 					3 Columns layout
