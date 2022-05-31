@@ -9,6 +9,7 @@ class StaffList extends Component {
 		super(props);
 		this.state = {
 			selectedStaff: null,
+			chooseID: -1,
 			style: {
 				display: "block",
 			},
@@ -21,6 +22,7 @@ class StaffList extends Component {
 			...this.state,
 			selectedStaff: staff,
 			style: { display: "none" },
+			chooseID: staff.id,
 		});
 	}
 
@@ -50,6 +52,14 @@ class StaffList extends Component {
 			return (
 				<div
 					key={staff.id}
+					style={
+						this.state.chooseID === staff.id
+							? { backgroundColor: "green", color: "red" }
+							: {
+									backgroundColor: "white",
+									color: "black",
+							  }
+					}
 					onClick={() => this.handleClick(staff)}
 					className={this.state.layout}>
 					<Card>
