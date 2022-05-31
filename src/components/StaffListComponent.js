@@ -43,6 +43,13 @@ class StaffList extends Component {
 	handleChangeToThreeColLayout() {
 		this.setState({
 			...this.state,
+			layout: "col-12 col-sm-5 col-md-3 m-1",
+		});
+	}
+
+	handleResetLayout() {
+		this.setState({
+			...this.state,
 			layout: "col-md-3 m-1",
 		});
 	}
@@ -73,12 +80,18 @@ class StaffList extends Component {
 				<div className="row justify-content-between">{StaffList}</div>
 				<button
 					onClick={() => {
+						this.handleResetLayout();
+					}}
+					className="btn btn-primary mt-2 mr-5">
+					Reset Layout
+				</button>
+				<button
+					onClick={() => {
 						this.handleChangeToOneColLayout();
 					}}
 					className="btn btn-success mt-2">
 					1 Column layout
 				</button>
-
 				<button
 					onClick={() => {
 						this.handleChangeToTwoColLayout();
@@ -86,19 +99,17 @@ class StaffList extends Component {
 					className="btn btn-warning mt-2 ml-5">
 					2 Columns layout
 				</button>
-
 				<button
-					onClick={() => {
+					onClick={(e) => {
+						console.log(e.target);
 						this.handleChangeToThreeColLayout();
 					}}
 					className="btn btn-info mt-2 ml-5">
 					3 Columns layout
 				</button>
-
 				<p className="mt-1" style={this.state.style}>
 					Bấm vào tên nhân viên để xem thông tin chi tiết
 				</p>
-
 				<div className="row mt-3">
 					<div className="col-12 col-md-5 ">
 						<StaffDetail selectedStaff={this.state.selectedStaff} />
