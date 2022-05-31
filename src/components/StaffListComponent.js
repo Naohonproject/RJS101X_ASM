@@ -54,9 +54,8 @@ class StaffList extends Component {
 					key={staff.id}
 					style={
 						this.state.chooseID === staff.id
-							? { backgroundColor: "green", color: "red" }
+							? { color: "red" }
 							: {
-									backgroundColor: "white",
 									color: "black",
 							  }
 					}
