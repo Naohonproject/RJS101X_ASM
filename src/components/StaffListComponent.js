@@ -10,6 +10,7 @@ class StaffList extends Component {
 		this.state = {
 			selectedStaff: null,
 			chooseID: -1,
+			disableBtnId: -1,
 			style: {
 				display: "block",
 			},
@@ -26,31 +27,35 @@ class StaffList extends Component {
 		});
 	}
 
-	handleChangeToOneColLayout() {
+	handleChangeToOneColLayout(btnId) {
 		this.setState({
 			...this.state,
 			layout: "col-12 m-1",
+			disableBtnId: parseInt(btnId),
 		});
 	}
 
-	handleChangeToTwoColLayout() {
+	handleChangeToTwoColLayout(btnId) {
 		this.setState({
 			...this.state,
 			layout: "col-sm-5  m-1",
+			disableBtnId: parseInt(btnId),
 		});
 	}
 
-	handleChangeToThreeColLayout() {
+	handleChangeToThreeColLayout(btnId) {
 		this.setState({
 			...this.state,
 			layout: "col-12 col-sm-5 col-md-3 m-1",
+			disableBtnId: parseInt(btnId),
 		});
 	}
 
-	handleResetLayout() {
+	handleResetLayout(btnId) {
 		this.setState({
 			...this.state,
 			layout: "col-md-3 m-1",
+			disableBtnId: parseInt(btnId),
 		});
 	}
 
@@ -80,8 +85,9 @@ class StaffList extends Component {
 				<div className="row justify-content-between">{StaffList}</div>
 				<button
 					data-index="1"
+					disabled={this.state.disableBtnId === 1}
 					onClick={(e) => {
-						this.handleResetLayout(e);
+						this.handleResetLayout(e.target.dataset.index);
 					}}
 					className="btn btn-primary mt-2 mr-5">
 					Reset Layout
@@ -89,7 +95,7 @@ class StaffList extends Component {
 				<button
 					data-index="2"
 					onClick={(e) => {
-						this.handleChangeToOneColLayout(e.target.dataset);
+						this.handleChangeToOneColLayout(e.target.dataset.index);
 					}}
 					className="btn btn-success mt-2">
 					1 Column layout
@@ -97,7 +103,7 @@ class StaffList extends Component {
 				<button
 					data-index="3"
 					onClick={(e) => {
-						this.handleChangeToTwoColLayout(e.target.dataset);
+						this.handleChangeToTwoColLayout(e.target.dataset.index);
 					}}
 					className="btn btn-warning mt-2 ml-5">
 					2 Columns layout
@@ -105,7 +111,7 @@ class StaffList extends Component {
 				<button
 					data-index="4"
 					onClick={(e) => {
-						this.handleChangeToThreeColLayout(e.target.dataset);
+						this.handleChangeToThreeColLayout(e.target.dataset.index);
 					}}
 					className="btn btn-info mt-2 ml-5">
 					3 Columns layout
