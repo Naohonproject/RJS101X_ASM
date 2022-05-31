@@ -103,6 +103,7 @@ class StaffList extends Component {
 				</button>
 				<button
 					data-index="3"
+					disabled={this.state.disableBtnId === 3}
 					onClick={(e) => {
 						this.handleChangeToTwoColLayout(e.target.dataset.index);
 					}}
@@ -111,6 +112,7 @@ class StaffList extends Component {
 				</button>
 				<button
 					data-index="4"
+					disabled={this.state.disableBtnId === 4}
 					onClick={(e) => {
 						this.handleChangeToThreeColLayout(e.target.dataset.index);
 					}}
