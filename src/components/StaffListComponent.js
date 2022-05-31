@@ -94,6 +94,7 @@ class StaffList extends Component {
 				</button>
 				<button
 					data-index="2"
+					disabled={this.state.disableBtnId === 2}
 					onClick={(e) => {
 						this.handleChangeToOneColLayout(e.target.dataset.index);
 					}}
