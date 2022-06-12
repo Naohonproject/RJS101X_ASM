@@ -1,34 +1,16 @@
 /** @format */
 
-import React, { Component } from "react";
-import { Navbar, NavbarBrand } from "reactstrap";
-import StaffList from "./components/StaffListComponent";
-import { STAFFS, DEPARTMENTS } from "./shared/staffs";
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
 
-class App extends Component {
-	constructor() {
-		super();
-		this.state = {
-			staffs: STAFFS,
-			departments: DEPARTMENTS,
-		};
-	}
+import Main from "./components/MainComponent";
 
-	render() {
-		return (
-			<div>
-				<Navbar dark color="primary">
-					<div className="container">
-						<NavbarBrand href="/">Ứng dụng quản lý nhân viên v1.0</NavbarBrand>
-					</div>
-				</Navbar>
-				<StaffList
-					staffs={this.state.staffs}
-					departments={this.state.departments}
-				/>
-			</div>
-		);
-	}
+function App() {
+	return (
+		<Router>
+			<Main />
+		</Router>
+	);
 }
 
 export default App;
