@@ -2,9 +2,9 @@
 
 import React, { Component } from "react";
 import { Card, CardText } from "reactstrap";
-import StaffDetail from "./StaffDetailComponent";
+import StaffDetail from "./StaffDetail";
 
-class StaffList extends Component {
+class Staff extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -138,4 +138,4 @@ class StaffList extends Component {
 	}
 }
 
-export default StaffList;
+export default Staff;

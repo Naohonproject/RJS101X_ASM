@@ -1,7 +1,9 @@
 /** @format */
 import React, { Component } from "react";
-import { Navbar, NavbarBrand } from "reactstrap";
-import StaffList from "./components/StaffListComponent";
+import { Route, Routes } from "react-router-dom";
+import StaffList from "./Staff";
+import Header from "./Header";
+import Footer from "./Footer";
 import { STAFFS, DEPARTMENTS } from "./shared/staffs";
 
 class Main extends Component {
@@ -15,13 +17,13 @@ class Main extends Component {
 
 	render() {
 		return (
-			<div>
-				<Navbar dark color="primary">
-					<div className="container">
-						<NavbarBrand href="/">Ứng dụng quản lý nhân viên v1.0</NavbarBrand>
-					</div>
-				</Navbar>
+			<div className="container">
+				<Header />
+				<Routes>
+					<Route></Route>
+				</Routes>
 				<StaffList staffs={this.state.staffs} departments={this.state.departments} />
+				<Footer />
 			</div>
 		);
 	}
