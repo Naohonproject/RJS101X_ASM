@@ -1,5 +1,6 @@
 /** @format */
 
+import { Request } from "cross-fetch";
 import React, { Component } from "react";
 import { Card, CardText } from "reactstrap";
 import StaffDetail from "./StaffDetail";
@@ -128,6 +129,7 @@ class Staff extends Component {
 				<p className="mt-1" style={this.state.style}>
 					Bấm vào tên nhân viên để xem thông tin chi tiết
 				</p>
+
 				<div className="row mt-3">
 					<div className="col-12 col-md-5 ">
 						<StaffDetail selectedStaff={this.state.selectedStaff} />

@@ -1,6 +1,8 @@
 /** @format */
 
 import React, { Component } from "react";
+import { Navbar, NavbarBrand, Jumbotron, Nav, NavbarToggler, Collapse, NavItem } from "reactstrap";
+import { NavLink } from "react-router-dom";
 
 class Header extends Component {
 	constructor(props) {
@@ -20,47 +22,29 @@ class Header extends Component {
 					<div className="container">
 						<NavbarToggler onClick={this.toggleNav} />
 						<NavbarBrand className="mr-auto" href="/">
-							<img src="../assets/images/logo.jpg" alt="logo" width={50} />
+							<img width={55} src={require("../assets/imgs/logo.png")} alt="" />
 						</NavbarBrand>
 						<Collapse navbar>
 							<Nav navbar>
 								<NavItem>
-									<NavLink to="/home" className="nav-link">
-										<span className="fa fa-home fa-lg"></span> Home
+									<NavLink to="/staff" className="nav-link">
+										<i class="fa-solid fa fa-users"></i> Staff
 									</NavLink>
 								</NavItem>
 								<NavItem>
 									<NavLink to="/aboutus" className="nav-link">
-										<span className="fa fa-home fa-lg"></span> About Us
+										<span className="fa fa-university"></span> Department
 									</NavLink>
 								</NavItem>
 								<NavItem>
 									<NavLink to="/menu" className="nav-link">
-										<span className="fa fa-list fa-lg"></span> Menu
-									</NavLink>
-								</NavItem>
-								<NavItem>
-									<NavLink to="/contactus" className="nav-link">
-										<span className="fa fa-address-card fa-lg"></span> Contact us
+										<span className="fa fa-money"></span> Pay Slip
 									</NavLink>
 								</NavItem>
 							</Nav>
 						</Collapse>
 					</div>
 				</Navbar>
-				<Jumbotron>
-					<div className="container">
-						<div className="row row-header">
-							<div className="col-12 col-sm-6">
-								<h1>Welcome to The King Restaurant</h1>
-								<p>
-									Where you are always be served, whoever you are,wherever you come from, whichever
-									color you are,Always ready to serve
-								</p>
-							</div>
-						</div>
-					</div>
-				</Jumbotron>
 			</React.Fragment>
 		);
 	}

@@ -1,10 +1,11 @@
 /** @format */
+
 import React, { Component } from "react";
 import { Route, Routes } from "react-router-dom";
 import StaffList from "./Staff";
 import Header from "./Header";
 import Footer from "./Footer";
-import { STAFFS, DEPARTMENTS } from "./shared/staffs";
+import { STAFFS, DEPARTMENTS } from "../shared/staffs";
 
 class Main extends Component {
 	constructor() {
