@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { Component } from "react";
-import { Navbar, NavbarBrand, Jumbotron, Nav, NavbarToggler, Collapse, NavItem } from "reactstrap";
+import { Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem } from "reactstrap";
 import { NavLink } from "react-router-dom";
 
 class Header extends Component {
@@ -13,6 +13,7 @@ class Header extends Component {
 		this.toggleNav = this.toggleNav.bind(this);
 	}
 	toggleNav() {
+		console.log(1);
 		this.setState({ isNavOpen: !this.state.isNavOpen });
 	}
 	render() {
@@ -21,10 +22,10 @@ class Header extends Component {
 				<Navbar dark expand="md">
 					<div className="container">
 						<NavbarToggler onClick={this.toggleNav} />
-						<NavbarBrand className="mr-auto" href="/">
-							<img width={55} src={require("../assets/imgs/logo.png")} alt="" />
+						<NavbarBrand className="mr-auto" href="">
+							<img width={55} src={require("../assets/images/logo.png")} alt="" />
 						</NavbarBrand>
-						<Collapse navbar>
+						<Collapse isOpen={this.state.isNavOpen} navbar>
 							<Nav navbar>
 								<NavItem>
 									<NavLink to="/staff" className="nav-link">
@@ -32,12 +33,12 @@ class Header extends Component {
 									</NavLink>
 								</NavItem>
 								<NavItem>
-									<NavLink to="/aboutus" className="nav-link">
+									<NavLink to="/def" className="nav-link">
 										<span className="fa fa-university"></span> Department
 									</NavLink>
 								</NavItem>
 								<NavItem>
-									<NavLink to="/menu" className="nav-link">
+									<NavLink to="/pay" className="nav-link">
 										<span className="fa fa-money"></span> Pay Slip
 									</NavLink>
 								</NavItem>
