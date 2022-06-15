@@ -209,5 +209,5 @@ export const STAFFS =
             overTime: 10,
             image: "/assets/images/staff.jpg"
         },
-
+ 
     ]

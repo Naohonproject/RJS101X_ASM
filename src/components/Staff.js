@@ -14,19 +14,14 @@ class Staff extends Component {
 
 	render() {
 		const StaffList = this.state.staffs.map((staff) => {
-			const link = staff.image;
 			return (
-				<div className="col-6 col-md-4 col-lg-2" key={staff.id}>
+				<div className="col-6 col-md-4 col-lg-2 " key={staff.id}>
 					<RenderCard item={staff} />
 				</div>
 			);
 		});
 
-		return (
-			<div className="container">
-				<div className="row mb-4">{StaffList}</div>
-			</div>
-		);
+		return <div className="row mb-4 mt-3">{StaffList}</div>;
 	}
 }
 

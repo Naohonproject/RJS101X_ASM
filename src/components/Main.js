@@ -5,6 +5,9 @@ import { Route, Routes } from "react-router-dom";
 import StaffList from "./Staff";
 import Header from "./Header";
 import Footer from "./Footer";
+import DetailStaff from "./DetailStaff";
+import Department from "./Department";
+import Salary from "./Salary";
 import { STAFFS, DEPARTMENTS } from "../shared/staffs";
 
 class Main extends Component {
@@ -21,9 +24,20 @@ class Main extends Component {
 			<div className="container">
 				<Header />
 				<Routes>
-					<Route></Route>
+					<Route
+						index
+						element={
+							<StaffList staffs={this.state.staffs} departments={this.state.departments} />
+						}></Route>
+					<Route
+						path="/staff"
+						element={<StaffList staffs={this.state.staffs} departments={this.state.departments} />}
+					/>
+					<Route path="/staff/:id" element={<DetailStaff staffs={this.state.staffs} />} />
+					<Route path="/dept" element={<Department departments={this.state.departments} />} />
+					<Route path="/pay" element={<Salary staffs={this.state.staffs} />} />
 				</Routes>
-				<StaffList staffs={this.state.staffs} departments={this.state.departments} />
+
 				<Footer />
 			</div>
 		);
