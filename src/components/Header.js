@@ -39,7 +39,7 @@ class Header extends Component {
 								</NavItem>
 								<NavItem>
 									<NavLink to="/pay" className="nav-link">
-										<span className="fa fa-money"></span> Pay Slip
+										<span className="fa fa-money"></span> Salary
 									</NavLink>
 								</NavItem>
 							</Nav>

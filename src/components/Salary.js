@@ -1,7 +1,8 @@
 /** @format */
 
 import React from "react";
-import { Card, CardBody, CardText, CardTitle } from "reactstrap";
+import { Card, CardBody, CardText, CardTitle, Breadcrumb, BreadcrumbItem } from "reactstrap";
+import { Link } from "react-router-dom";
 
 function Salary({ staffs }) {
 	const salaries = staffs.map((staff) => {
@@ -23,7 +24,23 @@ function Salary({ staffs }) {
 			</div>
 		);
 	});
-	return <div className="row">{salary}</div>;
+	return (
+		<React.Fragment>
+			<div className="container">
+				<div className="row">
+					<Breadcrumb className="mt-1">
+						<BreadcrumbItem>
+							<Link to={"/staff"}>Home</Link>
+						</BreadcrumbItem>
+						<BreadcrumbItem active>Salary</BreadcrumbItem>
+					</Breadcrumb>
+					<h3 className="col-12">Salary</h3>
+					<hr />
+				</div>
+				<div className="row">{salary}</div>;
+			</div>
+		</React.Fragment>
+	);
 }
 
 export default Salary;

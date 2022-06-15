@@ -9,6 +9,7 @@ import DetailStaff from "./DetailStaff";
 import Department from "./Department";
 import Salary from "./Salary";
 import { STAFFS, DEPARTMENTS } from "../shared/staffs";
+import StaffOfDepartment from "./StaffsOfDepartment";
 
 class Main extends Component {
 	constructor() {
@@ -36,6 +37,12 @@ class Main extends Component {
 					<Route path="/staff/:id" element={<DetailStaff staffs={this.state.staffs} />} />
 					<Route path="/dept" element={<Department departments={this.state.departments} />} />
 					<Route path="/pay" element={<Salary staffs={this.state.staffs} />} />
+					<Route
+						path="dept/staff/:deptID"
+						element={
+							<StaffOfDepartment staffs={this.state.staffs} departments={this.state.departments} />
+						}
+					/>
 				</Routes>
 
 				<Footer />

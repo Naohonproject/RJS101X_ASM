@@ -17,7 +17,7 @@ function Footer() {
 								<Link to="/dept">Department</Link>
 							</li>
 							<li>
-								<Link to="/pay">PaySlip</Link>
+								<Link to="/pay">Salary</Link>
 							</li>
 						</ul>
 					</div>
