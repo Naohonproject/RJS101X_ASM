@@ -1,15 +1,31 @@
 /** @format */
 
 import React, { Component } from "react";
-import { STAFFS } from "../shared/staffs";
+import { STAFFS, DEPARTMENTS } from "../shared/staffs";
 import RenderCard from "./RenderCard";
 class Staff extends Component {
 	constructor(props) {
 		super(props);
+		const deptIDs = DEPARTMENTS.map((dept) => dept.id);
 		this.state = {
 			selectedStaff: null,
 			staffs: STAFFS,
+			departments: DEPARTMENTS,
+			checkedIDs: deptIDs,
 		};
+		this.getDynamicDept = this.getDynamicDept.bind(this);
+	}
+
+	getDynamicDept() {
+		return this.state.checkedIDs.map((id) => {
+			let flag;
+			DEPARTMENTS.forEach((dept, index) => {
+				if (dept.id === id) {
+					flag = index;
+				}
+			});
+			return DEPARTMENTS[flag];
+		});
 	}
 
 	render() {
@@ -39,11 +55,47 @@ class Staff extends Component {
 			});
 		};
 
+		const hanleCheckBox = (e) => {
+			const id = e.target.id;
+			if (this.state.checkedIDs.includes(id)) {
+				this.setState(
+					{
+						...this.state,
+						checkedIDs: this.state.checkedIDs.filter((preID) => preID !== id),
+					},
+					() => {
+						this.setState({
+							...this.state,
+							staffs: STAFFS.filter((staff) => {
+								const result = this.getDynamicDept().includes(staff.department);
+								return result;
+							}),
+						});
+					}
+				);
+			} else {
+				this.setState(
+					{
+						...this.state,
+						checkedIDs: [...this.state.checkedIDs, id],
+					},
+					() => {
+						this.setState({
+							...this.state,
+							staffs: STAFFS.filter((staff) => {
+								const result = this.getDynamicDept().includes(staff.department);
+								return result;
+							}),
+						});
+					}
+				);
+			}
+		};
 		return (
 			<React.Fragment>
 				<div className="row align-items-center mt-4 justify-content-around">
-					<h3 className="col-12 col-md-4">Staffs</h3>
-					<div className="col-12 col-md-4 text-center row align-item-center">
+					<h3 className="col-12 col-lg-3 text-center">Staffs</h3>
+					<div className="col-12 col-lg-3 align-item-center text-center ">
 						<input
 							style={{
 								display: "inline-block",
@@ -60,8 +112,25 @@ class Staff extends Component {
 							className="mx-2"
 						/>
 					</div>
-					<div className="col-12 col-md-4">
-						
+					<div className="mt-2 col-12 col-lg-6 row justify-content-around text-center">
+						{DEPARTMENTS.map((dept) => {
+							return (
+								<div key={dept.id}>
+									<label className="mr-2" htmlFor={dept.name}>
+										{dept.name}
+									</label>
+									<input
+										checked={this.state.checkedIDs.includes(dept.id)}
+										value={dept.name}
+										type="checkbox"
+										id={dept.id}
+										onChange={(e) => {
+											hanleCheckBox(e);
+										}}
+									/>
+								</div>
+							);
+						})}
 					</div>
 				</div>
 				<hr />
