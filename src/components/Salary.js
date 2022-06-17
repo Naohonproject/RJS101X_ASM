@@ -30,7 +30,7 @@ function Salary({ staffs }) {
 				<div className="row">
 					<Breadcrumb className="mt-1">
 						<BreadcrumbItem>
-							<Link to={"/staff"}>Home</Link>
+							<Link to={"/staff"}>Staff</Link>
 						</BreadcrumbItem>
 						<BreadcrumbItem active>Salary</BreadcrumbItem>
 					</Breadcrumb>

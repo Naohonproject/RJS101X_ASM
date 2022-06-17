@@ -24,7 +24,7 @@ function StaffOfDepartment({ staffs, departments }) {
 			<div className="row">
 				<Breadcrumb className="mt-1">
 					<BreadcrumbItem>
-						<Link to={`/staff`}>Home</Link>
+						<Link to={`/staff`}>Staff</Link>
 					</BreadcrumbItem>
 					<BreadcrumbItem active>
 						<Link to={"/dept"}>Department</Link>

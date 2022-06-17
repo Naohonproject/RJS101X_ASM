@@ -116,7 +116,7 @@ class Staff extends Component {
 						{DEPARTMENTS.map((dept) => {
 							return (
 								<div key={dept.id}>
-									<label className="mr-2" htmlFor={dept.name}>
+									<label className="mr-2" htmlFor={dept.id}>
 										{dept.name}
 									</label>
 									<input
