@@ -5,6 +5,7 @@ import { STAFFS } from "../shared/staffs";
 
 import Filter from "./Filter";
 import StaffList from "./StaffList";
+
 function Staff() {
 	const [staffs, setStaffs] = useState(STAFFS);
 	const [searchStaff, setSearchStaff] = useState("");
