@@ -5,7 +5,6 @@ import { CardText, Card, CardBody, CardTitle, BreadcrumbItem, Breadcrumb } from 
 import { Link } from "react-router-dom";
 
 function Department({ departments, numberOfStaffs }) {
-	console.log(numberOfStaffs);
 	const dept = departments.map((department, index) => {
 		return (
 			<div className=" col-12 col-md-6 col-lg-4">
