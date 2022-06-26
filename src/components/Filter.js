@@ -1,6 +1,5 @@
 /** @format */
 import {
-	ModalFooter,
 	Modal,
 	Button,
 	ModalHeader,
@@ -16,7 +15,7 @@ import React, { useRef, useState } from "react";
 
 import { DEPARTMENTS } from "../shared/staffs";
 
-function Filter({ search }) {
+function Filter({ search, setStaffs, staffs }) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [fields, setFields] = useState({
 		staffName: "",
@@ -78,6 +77,7 @@ function Filter({ search }) {
 			remainingAnualLeave: "",
 			overTime: "",
 		};
+
 		const nameRegExp = /^[a-z ,.'-]{6,15}$/i;
 		const numberRegExp = /^\d$/;
 
@@ -102,8 +102,28 @@ function Filter({ search }) {
 		}
 		return errors;
 	}
+
 	const errors = validate();
-	const handleOnSubmit = (params) => {};
+
+	const handleOnSubmit = (e) => {
+		e.preventDefault();
+		const deptIndex = DEPARTMENTS.indexOf(
+			DEPARTMENTS.find((dept) => dept.name === fields.department)
+		);
+		const newStaff = {
+			id: staffs.length,
+			name: fields.staffName,
+			doB: fields.birth,
+			salaryScale: Number(fields.salaryScale),
+			startDate: fields.startingDay,
+			department: DEPARTMENTS[deptIndex],
+			annualLeave: Number(fields.remainingAnualLeave),
+			overTime: Number(fields.overTime),
+			image: "/assets/images/staff3.jpg",
+		};
+		toggleModal();
+		setStaffs((prev) => [...prev, newStaff]);
+	};
 
 	return (
 		<React.Fragment>
@@ -149,164 +169,153 @@ function Filter({ search }) {
 				<ModalHeader toggle={toggleModal}>Add Staff</ModalHeader>
 				<ModalBody>
 					<Form onSubmit={(e) => handleOnSubmit(e)}>
-						<FormGroup>
-							<div className="row">
-								<Label md={4} htmlFor="staffName">
-									Name
-								</Label>
-								<Col md={8}>
-									<Input
-										type="text"
-										id="staffName"
-										name="staffName"
-										placeholder="Staff Name"
-										value={fields.name}
-										onChange={(e) => handleOnInputChange(e)}
-										onBlur={(e) => handleOnBlur(e)}
-										valid={fields.touched.staffName && errors.staffName === ""}
-										invalid={errors.staffName !== ""}
-									/>
-									<FormFeedback>{errors.staffName}</FormFeedback>
-								</Col>
-							</div>
+						<FormGroup row>
+							<Label md={4} htmlFor="staffName">
+								Name
+							</Label>
+							<Col md={8}>
+								<Input
+									type="text"
+									id="staffName"
+									name="staffName"
+									placeholder="Staff Name"
+									value={fields.name}
+									onChange={(e) => handleOnInputChange(e)}
+									onBlur={(e) => handleOnBlur(e)}
+									valid={fields.touched.staffName && errors.staffName === ""}
+									invalid={errors.staffName !== ""}
+								/>
+								<FormFeedback>{errors.staffName}</FormFeedback>
+							</Col>
 						</FormGroup>
-						<FormGroup>
-							<div className="row">
-								<Label md={4} htmlFor="birth">
-									Birth day
-								</Label>
-								<Col md={8}>
-									<Input
-										type="date"
-										name="birth"
-										id="birth"
-										placeholder="Birth day"
-										value={fields.birth}
-										onChange={(e) => handleOnInputChange(e)}
-										onBlur={(e) => handleOnBlur(e)}
-										valid={fields.touched.birth && errors.birth === ""}
-										invalid={errors.birth !== ""}
-									/>
-									<FormFeedback>{errors.birth}</FormFeedback>
-								</Col>
-							</div>
+						<FormGroup row>
+							<Label md={4} htmlFor="birth">
+								Birth day
+							</Label>
+							<Col md={8}>
+								<Input
+									type="date"
+									name="birth"
+									id="birth"
+									placeholder="Birth day"
+									value={fields.birth}
+									onChange={(e) => handleOnInputChange(e)}
+									onBlur={(e) => handleOnBlur(e)}
+									valid={fields.touched.birth && errors.birth === ""}
+									invalid={errors.birth !== ""}
+								/>
+								<FormFeedback>{errors.birth}</FormFeedback>
+							</Col>
 						</FormGroup>
-						<FormGroup>
-							<div className="row">
-								<Label md={4} htmlFor="startingDay">
-									Starting Day
-								</Label>
-								<Col md={8}>
-									<Input
-										type="date"
-										name="startingDay"
-										id="startingDay"
-										placeholder="First Working Day"
-										value={fields.startingDay}
-										onChange={(e) => handleOnInputChange(e)}
-										onBlur={(e) => handleOnBlur(e)}
-										valid={fields.touched.startingDay && errors.startingDay === ""}
-										invalid={errors.startingDay !== ""}
-									/>
-									<FormFeedback>{errors.startingDay}</FormFeedback>
-								</Col>
-							</div>
+						<FormGroup row>
+							<Label md={4} htmlFor="startingDay">
+								Starting Day
+							</Label>
+							<Col md={8}>
+								<Input
+									type="date"
+									name="startingDay"
+									id="startingDay"
+									placeholder="First Working Day"
+									value={fields.startingDay}
+									onChange={(e) => handleOnInputChange(e)}
+									onBlur={(e) => handleOnBlur(e)}
+									valid={fields.touched.startingDay && errors.startingDay === ""}
+									invalid={errors.startingDay !== ""}
+								/>
+								<FormFeedback>{errors.startingDay}</FormFeedback>
+							</Col>
 						</FormGroup>
-						<FormGroup>
-							<div className="row">
-								<Label md={4} for="department">
-									Department
-								</Label>
-								<Col md={8}>
-									<Input
-										onChange={(e) => handleOnInputChange(e)}
-										onBlur={(e) => handleOnBlur(e)}
-										value={fields.department}
-										type="select"
-										name="department"
-										id="department"
-										valid={fields.touched.department && errors.department === ""}
-										invalid={errors.department !== ""}>
-										<option>Sale</option>
-										<option>HR</option>
-										<option>Marketing</option>
-										<option>IT</option>
-										<option>Finance</option>
-									</Input>
-									<FormFeedback>{errors.department}</FormFeedback>
-								</Col>
-							</div>
+						<FormGroup row>
+							<Label md={4} for="department">
+								Department
+							</Label>
+							<Col md={8}>
+								<Input
+									onChange={(e) => handleOnInputChange(e)}
+									onBlur={(e) => handleOnBlur(e)}
+									value={fields.department}
+									type="select"
+									name="department"
+									id="department"
+									valid={fields.touched.department && errors.department === ""}
+									invalid={errors.department !== ""}>
+									<option>Sale</option>
+									<option>HR</option>
+									<option>Marketing</option>
+									<option>IT</option>
+									<option>Finance</option>
+								</Input>
+								<FormFeedback>{errors.department}</FormFeedback>
+							</Col>
 						</FormGroup>
-						<FormGroup>
-							<div className="row">
-								<Label md={4} htmlFor="salaryScale">
-									Salary Scale
-								</Label>
-								<Col md={8}>
-									<Input
-										onChange={(e) => handleOnInputChange(e)}
-										onBlur={(e) => handleOnBlur(e)}
-										value={fields.salaryScale}
-										type="text"
-										id="salaryScale"
-										name="salaryScale"
-										placeholder="1.3"
-										valid={fields.touched.salaryScale && errors.salaryScale === ""}
-										invalid={errors.salaryScale !== ""}
-									/>
-									<FormFeedback>{errors.salaryScale}</FormFeedback>
-								</Col>
-							</div>
+						<FormGroup row>
+							<Label md={4} htmlFor="salaryScale">
+								Salary Scale
+							</Label>
+							<Col md={8}>
+								<Input
+									onChange={(e) => handleOnInputChange(e)}
+									onBlur={(e) => handleOnBlur(e)}
+									value={fields.salaryScale}
+									type="text"
+									id="salaryScale"
+									name="salaryScale"
+									placeholder="1.3"
+									valid={fields.touched.salaryScale && errors.salaryScale === ""}
+									invalid={errors.salaryScale !== ""}
+								/>
+								<FormFeedback>{errors.salaryScale}</FormFeedback>
+							</Col>
 						</FormGroup>
-						<FormGroup>
-							<div className="row">
-								<Label md={4} htmlFor="remainingAnualLeave">
-									Remaining Anual Leave
-								</Label>
-								<Col md={8}>
-									<Input
-										onChange={(e) => handleOnInputChange(e)}
-										onBlur={(e) => handleOnBlur(e)}
-										value={fields.remainingAnualLeave}
-										type="text"
-										id="remainingAnualLeave"
-										name="remainingAnualLeave"
-										placeholder="0"
-										valid={fields.touched.remainingAnualLeave && errors.remainingAnualLeave === ""}
-										invalid={errors.remainingAnualLeave !== ""}
-									/>
-									<FormFeedback>{errors.remainingAnualLeave}</FormFeedback>
-								</Col>
-							</div>
+						<FormGroup row>
+							<Label md={4} htmlFor="remainingAnualLeave">
+								Remaining Anual Leave
+							</Label>
+							<Col md={8}>
+								<Input
+									onChange={(e) => handleOnInputChange(e)}
+									onBlur={(e) => handleOnBlur(e)}
+									value={fields.remainingAnualLeave}
+									type="text"
+									id="remainingAnualLeave"
+									name="remainingAnualLeave"
+									placeholder="0"
+									valid={fields.touched.remainingAnualLeave && errors.remainingAnualLeave === ""}
+									invalid={errors.remainingAnualLeave !== ""}
+								/>
+								<FormFeedback>{errors.remainingAnualLeave}</FormFeedback>
+							</Col>
 						</FormGroup>
-						<FormGroup>
-							<div className="row">
-								<Label md={4} htmlFor="overTime">
-									Over Time
-								</Label>
-								<Col md={8}>
-									<Input
-										onChange={(e) => handleOnInputChange(e)}
-										onBlur={(e) => handleOnBlur(e)}
-										value={fields.overTime}
-										type="text"
-										id="overTime"
-										name="overTime"
-										placeholder="0"
-										valid={fields.touched.overTime && errors.overTime === ""}
-										invalid={errors.overTime !== ""}
-									/>
-									<FormFeedback>{errors.overTime}</FormFeedback>
-								</Col>
-							</div>
+						<FormGroup row>
+							<Label md={4} htmlFor="overTime">
+								Over Time
+							</Label>
+							<Col md={8}>
+								<Input
+									onChange={(e) => handleOnInputChange(e)}
+									onBlur={(e) => handleOnBlur(e)}
+									value={fields.overTime}
+									type="text"
+									id="overTime"
+									name="overTime"
+									placeholder="0"
+									valid={fields.touched.overTime && errors.overTime === ""}
+									invalid={errors.overTime !== ""}
+								/>
+								<FormFeedback>{errors.overTime}</FormFeedback>
+							</Col>
+						</FormGroup>
+						<hr />
+						<FormGroup row>
+							<Col md={{ size: 10, offset: 2 }}>
+								<Button type="submit" color="primary">
+									Add
+								</Button>
+							</Col>
 						</FormGroup>
 					</Form>
 				</ModalBody>
-				<ModalFooter>
-					<Button color="primary" onClick={toggleModal}>
-						Add
-					</Button>{" "}
-				</ModalFooter>
 			</Modal>
 		</React.Fragment>
 	);

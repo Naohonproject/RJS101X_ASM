@@ -9,7 +9,9 @@ function StaffOfDepartment({ staffs, departments }) {
 	const params = useParams();
 	const deptId = params.deptID;
 
-	const staffsOfDept = staffs.filter((staff) => staff.department === departments[deptId]);
+	const staffsOfDept = staffs.filter((staff) => staff.department.id === departments[deptId].id);
+
+	console.log(staffs[1].department.id === departments[deptId].id);
 
 	const StaffList = staffsOfDept.map((staff) => {
 		return (
@@ -33,7 +35,7 @@ function StaffOfDepartment({ staffs, departments }) {
 				</Breadcrumb>
 				<hr />
 			</div>
-			<div className="row mb-4 mt-3">{StaffList}</div>;
+			<div className="row mb-4 mt-3">{StaffList}</div>
 		</div>
 	);
 }

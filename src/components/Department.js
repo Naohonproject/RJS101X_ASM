@@ -3,6 +3,7 @@
 import React from "react";
 import { CardText, Card, CardBody, CardTitle, BreadcrumbItem, Breadcrumb } from "reactstrap";
 import { Link } from "react-router-dom";
+
 function Department({ departments }) {
 	const dept = departments.map((department, index) => {
 		return (
@@ -18,6 +19,7 @@ function Department({ departments }) {
 			</div>
 		);
 	});
+
 	return (
 		<React.Fragment>
 			<div className="container">

@@ -1,13 +1,17 @@
 /** @format */
 
-import React, { useState, useRef } from "react";
-import { STAFFS } from "../shared/staffs";
+import React, { useState, useContext } from "react";
 
 import Filter from "./Filter";
 import StaffList from "./StaffList";
+import { StaffContext } from "../context/StaffContext";
 
 function Staff() {
-	const [staffs, setStaffs] = useState(STAFFS);
+	const staffContextValue = useContext(StaffContext);
+
+	const staffs = staffContextValue.staffs;
+	const setStaffs = staffContextValue.setStaffs;
+
 	const [searchStaff, setSearchStaff] = useState("");
 
 	function getName(list, name) {
@@ -32,7 +36,7 @@ function Staff() {
 
 	return (
 		<React.Fragment>
-			<Filter search={search} />
+			<Filter search={search} setStaffs={setStaffs} staffs={staffs} />
 			<hr />
 			<StaffList staffs={searchStaff ? searchStaff : staffs} />
 		</React.Fragment>

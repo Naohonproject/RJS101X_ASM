@@ -13,6 +13,7 @@ import {
 import dateFormat from "dateformat";
 import { useParams, Link } from "react-router-dom";
 function DetailStaff({ staffs }) {
+	
 	const paras = useParams();
 	const id = paras.id;
 	const staff = staffs[id];
