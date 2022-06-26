@@ -4,7 +4,8 @@ import React from "react";
 import { CardText, Card, CardBody, CardTitle, BreadcrumbItem, Breadcrumb } from "reactstrap";
 import { Link } from "react-router-dom";
 
-function Department({ departments }) {
+function Department({ departments, numberOfStaffs }) {
+	console.log(numberOfStaffs);
 	const dept = departments.map((department, index) => {
 		return (
 			<div className=" col-12 col-md-6 col-lg-4">
@@ -12,7 +13,7 @@ function Department({ departments }) {
 					<Card style={{ marginTop: 10 }}>
 						<CardBody>
 							<CardTitle>{department.name}</CardTitle>
-							<CardText>Số lượng nhân viên : {department.numberOfStaff}</CardText>
+							<CardText>Số lượng nhân viên : {numberOfStaffs[index]}</CardText>
 						</CardBody>
 					</Card>
 				</Link>

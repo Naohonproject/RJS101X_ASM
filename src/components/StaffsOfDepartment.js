@@ -11,8 +11,6 @@ function StaffOfDepartment({ staffs, departments }) {
 
 	const staffsOfDept = staffs.filter((staff) => staff.department.id === departments[deptId].id);
 
-	console.log(staffs[1].department.id === departments[deptId].id);
-
 	const StaffList = staffsOfDept.map((staff) => {
 		return (
 			<div className="col-6 col-md-4 col-lg-2 " key={staff.id}>
