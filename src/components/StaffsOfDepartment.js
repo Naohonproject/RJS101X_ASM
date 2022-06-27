@@ -1,13 +1,23 @@
 /** @format */
 
 import React from "react";
-import { useParams } from "react-router-dom";
+import { connect } from "react-redux";
 import { Breadcrumb, BreadcrumbItem } from "reactstrap";
 import { Link } from "react-router-dom";
+
 import RenderCard from "./RenderCard";
-function StaffOfDepartment({ staffs, departments }) {
-	const params = useParams();
-	const deptId = params.deptID;
+
+function mapStateToProps(state) {
+	return {
+		staffs: state.staffList,
+		departments: state.filter.departments,
+	};
+}
+
+function StaffOfDepartment({ match, departments, staffs }) {
+	const paras = match.params;
+
+	const deptId = paras.deptId;
 
 	const staffsOfDept = staffs.filter((staff) => staff.department.id === departments[deptId].id);
 
@@ -38,4 +48,4 @@ function StaffOfDepartment({ staffs, departments }) {
 	);
 }
 
-export default StaffOfDepartment;
+export default connect(mapStateToProps)(StaffOfDepartment);

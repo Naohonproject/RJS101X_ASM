@@ -3,16 +3,23 @@
 import React from "react";
 import { CardText, Card, CardBody, CardTitle, BreadcrumbItem, Breadcrumb } from "reactstrap";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
-function Department({ departments, numberOfStaffs }) {
+function mapStateToProps(state) {
+	return {
+		departments: state.filter.departments,
+	};
+}
+
+function Department({ departments }) {
 	const dept = departments.map((department, index) => {
 		return (
 			<div className=" col-12 col-md-6 col-lg-4">
-				<Link to={`staff/${index}`}>
+				<Link to={`/staffs/${index}`}>
 					<Card style={{ marginTop: 10 }}>
 						<CardBody>
 							<CardTitle>{department.name}</CardTitle>
-							<CardText>Số lượng nhân viên : {numberOfStaffs[index]}</CardText>
+							<CardText>Số lượng nhân viên : {department.numberOfStaff}</CardText>
 						</CardBody>
 					</Card>
 				</Link>
@@ -39,4 +46,4 @@ function Department({ departments, numberOfStaffs }) {
 	);
 }
 
-export default Department;
+export default connect(mapStateToProps)(Department);

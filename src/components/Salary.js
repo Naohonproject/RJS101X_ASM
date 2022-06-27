@@ -1,9 +1,15 @@
 /** @format */
 
 import React from "react";
+import { connect } from "react-redux";
 import { Card, CardBody, CardText, CardTitle, Breadcrumb, BreadcrumbItem } from "reactstrap";
 import { Link } from "react-router-dom";
 
+function mapStateToProps(state) {
+	return {
+		staffs: state.staffList,
+	};
+}
 function Salary({ staffs }) {
 	const salaries = staffs.map((staff) => {
 		return 3000000 * staff.salaryScale + 200000 * staff.overTime;
@@ -43,4 +49,4 @@ function Salary({ staffs }) {
 	);
 }
 
-export default Salary;
+export default connect(mapStateToProps)(Salary);

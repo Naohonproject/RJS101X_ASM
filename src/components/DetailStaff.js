@@ -11,18 +11,25 @@ import {
 	Breadcrumb,
 } from "reactstrap";
 import dateFormat from "dateformat";
-import { useParams, Link } from "react-router-dom";
-function DetailStaff({ staffs }) {
-	
-	const paras = useParams();
-	const id = paras.id;
-	const staff = staffs[id];
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+
+function mapStateToProps(state) {
+	return {
+		staffs: state.staffList,
+	};
+}
+
+function DetailStaff(props) {
+	const paras = props.match.params;
+	const staff = props.staffs[paras.id];
 	const staffName = staff.name;
 	const staffBirthDay = dateFormat(staff.doB, "dd/mm/yyyy");
 	const startDate = dateFormat(staff.startDate, "dd/mm/yyyy");
 	const dept = staff.department.name;
 	const annualLeave = staff.annualLeave;
 	const overTime = staff.overTime;
+
 	return (
 		<div className="container">
 			<div className="row">
@@ -59,4 +66,4 @@ function DetailStaff({ staffs }) {
 	);
 }
 
-export default DetailStaff;
+export default connect(mapStateToProps)(DetailStaff);

@@ -1,9 +1,14 @@
 /** @format */
 import React from "react";
 
-import { Card, CardImg, CardBody, CardText } from "reactstrap";
-
+import { connect } from "react-redux";
 import RenderCard from "./RenderCard";
+
+function mapStateToProps(state) {
+	return {
+		staffs: state.staffList,
+	};
+}
 
 function StaffList({ staffs }) {
 	return (
@@ -19,4 +24,4 @@ function StaffList({ staffs }) {
 	);
 }
 
-export default StaffList;
+export default connect(mapStateToProps)(StaffList);

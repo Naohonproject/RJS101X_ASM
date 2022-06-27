@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { useState, createContext, useEffect, useRef } from "react";
-
+import { connect } from "react-redux";
 import { STAFFS, DEPARTMENTS } from "../shared/staffs";
 import storage from "../localStorage/staffListStorage";
 
