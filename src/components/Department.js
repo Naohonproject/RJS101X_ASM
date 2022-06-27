@@ -8,10 +8,21 @@ import { connect } from "react-redux";
 function mapStateToProps(state) {
 	return {
 		departments: state.filter.departments,
+		staffs: state.staffList,
 	};
 }
 
-function Department({ departments }) {
+function Department({ departments, staffs }) {
+	const staffNumberOfDept = departments.map((dept) => {
+		let numberOfStaff = 0;
+		staffs.forEach((staff) => {
+			if (staff.department.id === dept.id) {
+				numberOfStaff = numberOfStaff + 1;
+			}
+		});
+		return numberOfStaff;
+	});
+
 	const dept = departments.map((department, index) => {
 		return (
 			<div className=" col-12 col-md-6 col-lg-4">
@@ -19,7 +30,7 @@ function Department({ departments }) {
 					<Card style={{ marginTop: 10 }}>
 						<CardBody>
 							<CardTitle>{department.name}</CardTitle>
-							<CardText>Số lượng nhân viên : {department.numberOfStaff}</CardText>
+							<CardText>Số lượng nhân viên : {staffNumberOfDept[index]}</CardText>
 						</CardBody>
 					</Card>
 				</Link>
