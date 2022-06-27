@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 
 import RenderCard from "./RenderCard";
 
+// TODO: select datas from store to be passed to component such props
 function mapStateToProps(state) {
 	return {
 		staffs: state.staffList,
@@ -15,12 +16,14 @@ function mapStateToProps(state) {
 }
 
 function StaffOfDepartment({ match, departments, staffs }) {
+	// TODO: Take staff id from dynamic URL whichs pass by Link component with "to" props
 	const paras = match.params;
-
 	const deptId = paras.deptId;
 
+	// TODO: get the staffs who belongs to the Deparment which user clicked to be rediected to this view
 	const staffsOfDept = staffs.filter((staff) => staff.department.id === departments[deptId].id);
 
+	// TODO: Render staffsList to view by map through staffsOfDept
 	const StaffList = staffsOfDept.map((staff) => {
 		return (
 			<div className="col-6 col-md-4 col-lg-2 " key={staff.id}>
@@ -29,6 +32,7 @@ function StaffOfDepartment({ match, departments, staffs }) {
 		);
 	});
 
+	// return the view
 	return (
 		<div className="container">
 			<div className="row">
@@ -48,4 +52,5 @@ function StaffOfDepartment({ match, departments, staffs }) {
 	);
 }
 
+// TODO: Connect this component to store
 export default connect(mapStateToProps)(StaffOfDepartment);

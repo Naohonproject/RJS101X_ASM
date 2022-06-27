@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { Card, CardBody, CardText, CardTitle, Breadcrumb, BreadcrumbItem } from "reactstrap";
 import { Link } from "react-router-dom";
 
+// TODO: select datas from store to be passed to component such props
 function mapStateToProps(state) {
 	return {
 		staffs: state.staffList,
@@ -48,5 +49,5 @@ function Salary({ staffs }) {
 		</React.Fragment>
 	);
 }
-
+// TODO: Connect this component to store
 export default connect(mapStateToProps)(Salary);

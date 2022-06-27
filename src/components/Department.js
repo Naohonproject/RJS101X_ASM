@@ -5,6 +5,7 @@ import { CardText, Card, CardBody, CardTitle, BreadcrumbItem, Breadcrumb } from 
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
+// TODO: select datas from store to be passed to component such props
 function mapStateToProps(state) {
 	return {
 		departments: state.filter.departments,
@@ -13,6 +14,7 @@ function mapStateToProps(state) {
 }
 
 function Department({ departments, staffs }) {
+	// TODO: Get the staff number of each deparment
 	const staffNumberOfDept = departments.map((dept) => {
 		let numberOfStaff = 0;
 		staffs.forEach((staff) => {
@@ -56,5 +58,5 @@ function Department({ departments, staffs }) {
 		</React.Fragment>
 	);
 }
-
+// TODO: Connect this component to store
 export default connect(mapStateToProps)(Department);

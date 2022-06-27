@@ -10,6 +10,7 @@ import Department from "./Department";
 import Salary from "./Salary";
 import StaffOfDepartment from "./StaffsOfDepartment";
 
+// TODO: routing our Component to match with the URL
 function Main() {
 	return (
 		<div className="container">

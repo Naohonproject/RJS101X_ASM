@@ -5,6 +5,7 @@ import { Control, LocalForm, Errors } from "react-redux-form";
 import { connect } from "react-redux";
 import { addStaff } from "../redux/actions";
 
+// TODO: select datas from store to be passed to component such props
 function mapStateToProps(state) {
 	return {
 		staffs: state.staffList,
@@ -12,12 +13,14 @@ function mapStateToProps(state) {
 	};
 }
 
+// TODO: This compoent is responsile for filter staffs list in Staff Component by seaching,checking to checkbox
 function Filter({ staffs, departments, dispatch, search, setsearchedStaff, setfiltedStaffs }) {
-	console.log(staffs);
+	// TODO: get ids from department
 	const deptIDs = departments.map((dept) => dept.id);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [checkedIDs, setCheckedIDs] = useState(deptIDs);
 
+	//TODO: get depts which rely on checkIDs state which update when user checked or unchecked the checkboxs
 	const getCheckedDept = () => {
 		return checkedIDs.map((id) => {
 			let flag;
@@ -30,6 +33,7 @@ function Filter({ staffs, departments, dispatch, search, setsearchedStaff, setfi
 		});
 	};
 
+	// TODO: handle checking and unchecking the checking box by new state for checkedIDs state
 	const hanleCheckBox = (e) => {
 		const id = e.target.id;
 		if (checkedIDs.includes(id)) {
@@ -39,6 +43,7 @@ function Filter({ staffs, departments, dispatch, search, setsearchedStaff, setfi
 		}
 	};
 
+	//TODO: difined what will be doing after staffs(from store) and checkedIDs state update
 	useEffect(() => {
 		const newFiltedStaff = staffs.filter((staff) => {
 			const result = getCheckedDept()
@@ -46,20 +51,25 @@ function Filter({ staffs, departments, dispatch, search, setsearchedStaff, setfi
 				.includes(staff.department.id);
 			return result;
 		});
+		// TODO:update fileredStaffs which the state of Staff Component(this component's parent componet)
 		setfiltedStaffs(newFiltedStaff);
 	}, [checkedIDs, staffs]);
 
+	// TODO: hanle event when user click on button named "add Staffs",a popup will be displayed
 	const toggleModal = () => {
 		setIsModalOpen(!isModalOpen);
 	};
 
+	//TODO: use ref to take the DOM elment from DOM
 	const searchInput = useRef(null);
 
+	// TODO: hanle when click search button, implement search funcion which is defined insise the Staff Component to setSate for searchedStaff state
 	const handleOnSearch = () => {
 		const searchresult = searchInput.current.value;
 		search(searchresult);
 	};
 
+	// TODO: hanle the event when user don't need to search anymore , thay clear the search input, then the staffList component need to re-render with filteredStaffs data because we setState for searchedStaff to null
 	const handleOnKeyUp = (e) => {
 		const inputValue = e.target.value;
 		if (inputValue === "") {
@@ -67,6 +77,7 @@ function Filter({ staffs, departments, dispatch, search, setsearchedStaff, setfi
 		}
 	};
 
+	// TODO: HANDLE ADD NEW STAFF by take data from controled Form that inside Modal popup
 	function handleAddStaff(value) {
 		const deptIndex = departments.indexOf(
 			departments.find((dept) => dept.name === value.departments)
@@ -83,11 +94,12 @@ function Filter({ staffs, departments, dispatch, search, setsearchedStaff, setfi
 			overTime: Number(value.overTime),
 			image: "/assets/images/staff8.jpg",
 		};
-
+		// TODO: dispatch a "addStaff" action with payload is the new Staff
 		dispatch(addStaff(newStaff));
 		setIsModalOpen(!isModalOpen);
 	}
 
+	// TODO: difine expressions to validate our form
 	const nameRegExp = /^[a-z ,.'-]{6,15}$/i;
 	const numberRegExp = /^[+-]?([0-9]*[.])?[0-9]+$/;
 	const required = (val) => val && val.length;
@@ -350,5 +362,5 @@ function Filter({ staffs, departments, dispatch, search, setsearchedStaff, setfi
 		</React.Fragment>
 	);
 }
-
+// TODO: Connect this component to store
 export default connect(mapStateToProps)(Filter);

@@ -14,6 +14,7 @@ import reportWebVitals from "./reportWebVitals";
 import store from "./redux/store";
 import { Provider } from "react-redux";
 
+//TODO: Render our APP to root Element in DOM , use Provider(a Higher Order Component) supplied by react-redux to let our components inside App are able to connect to
 ReactDOM.render(
 	<React.StrictMode>
 		<Provider store={store}>
