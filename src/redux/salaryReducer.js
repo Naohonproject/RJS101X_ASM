@@ -1,6 +1,7 @@
 /** @format */
 import * as actionTypes from "./actionTypes";
 
+// todo: to update state of salary base on action user dispatch to
 export const SalaryReducer = (
 	state = {
 		isLoading: true,

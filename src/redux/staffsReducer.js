@@ -1,6 +1,8 @@
 /** @format */
 import * as actionTypes from "./actionTypes";
 
+// todo: to update state of staff base on action user dispatch to
+
 export const StaffsReducer = (
 	state = {
 		isLoading: true,

@@ -1,4 +1,5 @@
 /** @format */
+// todo : define actions type names
 
 export const GET_STAFFS = "GET_STAFFS";
 export const STAFFS_LOADING = "STAFF_LOADING";

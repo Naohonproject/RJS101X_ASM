@@ -1,6 +1,7 @@
 /** @format */
 import * as actionTypes from "./actionTypes";
 
+// todo : to filt the state of department base on action user dispatch to
 export const DepartmentsReducer = (
 	state = {
 		isLoading: true,
