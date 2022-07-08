@@ -1,26 +1,14 @@
 /** @format */
 import { Modal, Button, ModalHeader, ModalBody, Label, Col, Row } from "reactstrap";
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Control, LocalForm, Errors } from "react-redux-form";
-import { connect } from "react-redux";
-import { addStaff } from "../redux/actions";
 
-// TODO: select datas from store to be passed to component such props
-function mapStateToProps(state) {
-	return {
-		staffs: state.staffList,
-		departments: state.filter.departments,
-	};
-}
-
-// TODO: This compoent is responsile for filter staffs list in Staff Component by seaching,checking to checkbox
-function Filter({ staffs, departments, dispatch, search, setsearchedStaff, setfiltedStaffs }) {
-	// TODO: get ids from department
+function Filter({ departments, staffs, search, setsearchedStaff, setfiltedStaffs, postStaff }) {
 	const deptIDs = departments.map((dept) => dept.id);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [checkedIDs, setCheckedIDs] = useState(deptIDs);
 
-	//TODO: get depts which rely on checkIDs state which update when user checked or unchecked the checkboxs
+	// CHECKBOX SEARCH FILTER FEATURE
 	const getCheckedDept = () => {
 		return checkedIDs.map((id) => {
 			let flag;
@@ -33,7 +21,6 @@ function Filter({ staffs, departments, dispatch, search, setsearchedStaff, setfi
 		});
 	};
 
-	// TODO: handle checking and unchecking the checking box by new state for checkedIDs state
 	const hanleCheckBox = (e) => {
 		const id = e.target.id;
 		if (checkedIDs.includes(id)) {
@@ -43,69 +30,58 @@ function Filter({ staffs, departments, dispatch, search, setsearchedStaff, setfi
 		}
 	};
 
-	//TODO: difined what will be doing after staffs(from store) and checkedIDs state update
 	useEffect(() => {
 		const newFiltedStaff = staffs.filter((staff) => {
 			const result = getCheckedDept()
 				.map((dept) => dept.id)
-				.includes(staff.department.id);
+				.includes(staff.departmentId);
 			return result;
 		});
-		// TODO:update fileredStaffs which the state of Staff Component(this component's parent componet)
 		setfiltedStaffs(newFiltedStaff);
 	}, [checkedIDs, staffs]);
+	// END OF FILTER BY CHECKBOX FEATURE
 
-	// TODO: hanle event when user click on button named "add Staffs",a popup will be displayed
-	const toggleModal = () => {
-		setIsModalOpen(!isModalOpen);
-	};
-
-	//TODO: use ref to take the DOM elment from DOM
+	// SEARCH FILTER FEATURE
 	const searchInput = useRef(null);
-
-	// TODO: hanle when click search button, implement search funcion which is defined insise the Staff Component to setSate for searchedStaff state
 	const handleOnSearch = () => {
 		const searchresult = searchInput.current.value;
 		search(searchresult);
 	};
-
-	// TODO: hanle the event when user don't need to search anymore , thay clear the search input, then the staffList component need to re-render with filteredStaffs data because we setState for searchedStaff to null
 	const handleOnKeyUp = (e) => {
 		const inputValue = e.target.value;
 		if (inputValue === "") {
 			setsearchedStaff(null);
 		}
 	};
+	//END OF SEARCH FILTER
 
-	// TODO: HANDLE ADD NEW STAFF by take data from controled Form that inside Modal popup
-	function handleAddStaff(value) {
-		const deptIndex = departments.indexOf(
-			departments.find((dept) => dept.name === value.departments)
-		);
-
-		const newStaff = {
-			id: staffs.length,
-			name: value.name,
-			doB: value.birthDay,
-			salaryScale: Number(value.scaleSalary),
-			startDate: value.startingDate,
-			department: departments[deptIndex],
-			annualLeave: Number(value.ramaingDayOff),
-			overTime: Number(value.overTime),
-			image: "/assets/images/staff8.jpg",
-		};
-		// TODO: dispatch a "addStaff" action with payload is the new Staff
-		dispatch(addStaff(newStaff));
-		setIsModalOpen(!isModalOpen);
-	}
-
-	// TODO: difine expressions to validate our form
+	// ADD NEW STAFF FEATURE
 	const nameRegExp = /^[a-z ,.'-]{6,15}$/i;
 	const numberRegExp = /^[+-]?([0-9]*[.])?[0-9]+$/;
 	const required = (val) => val && val.length;
 	const isNumber = (val) => val && numberRegExp.test(val);
 	const valName = (val) => val && nameRegExp.test(val);
 
+	const toggleModal = () => {
+		setIsModalOpen(!isModalOpen);
+	};
+
+	function handleAddStaff(value) {
+		const deptId = departments.find((dept) => dept.name === value.departments).id;
+		const newStaff = {
+			name: value.name,
+			doB: value.birthDay,
+			salaryScale: Number(value.scaleSalary),
+			startDate: value.startingDate,
+			departmentId: deptId,
+			annualLeave: Number(value.ramaingDayOff),
+			overTime: Number(value.overTime),
+			image: "/assets/images/alberto.png",
+		};
+		postStaff(newStaff);
+		setIsModalOpen(!isModalOpen);
+	}
+	// END OF ADD NEW STAFF FEATURE
 	return (
 		<React.Fragment>
 			<div className="row align-items-center mt-4 justify-content-around">
@@ -130,6 +106,7 @@ function Filter({ staffs, departments, dispatch, search, setsearchedStaff, setfi
 							onKeyUp={handleOnKeyUp}
 						/>
 						<button onClick={handleOnSearch} type="button" class="btn btn-outline-primary ml-2">
+							{" "}
 							search
 						</button>
 					</div>
@@ -155,6 +132,7 @@ function Filter({ staffs, departments, dispatch, search, setsearchedStaff, setfi
 					})}
 				</div>
 			</div>
+
 			<Modal isOpen={isModalOpen} toggle={toggleModal}>
 				<ModalHeader toggle={toggleModal}>Add Staff</ModalHeader>
 				<ModalBody>
@@ -362,5 +340,4 @@ function Filter({ staffs, departments, dispatch, search, setsearchedStaff, setfi
 		</React.Fragment>
 	);
 }
-// TODO: Connect this component to store
-export default connect(mapStateToProps)(Filter);
+export default Filter;

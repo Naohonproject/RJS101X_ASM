@@ -1,56 +1,54 @@
 /** @format */
 
-import React from "react";
-import { connect } from "react-redux";
+import React, { useEffect, useState } from "react";
+
 import { Breadcrumb, BreadcrumbItem } from "reactstrap";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 import RenderCard from "./RenderCard";
+import { Loading } from "./Loading";
 
-// TODO: select datas from store to be passed to component such props
-function mapStateToProps(state) {
-	return {
-		staffs: state.staffList,
-		departments: state.filter.departments,
-	};
-}
+function StaffOfDepartment({ match }) {
+	const deptId = match.params.deptId;
+	const [staffs, setStaffs] = useState([]);
 
-function StaffOfDepartment({ match, departments, staffs }) {
-	// TODO: Take staff id from dynamic URL whichs pass by Link component with "to" props
-	const paras = match.params;
-	const deptId = paras.deptId;
+	useEffect(() => {
+		fetch(`https://rjs101xbackend.herokuapp.com/departments/${deptId}`)
+			.then((res) => res.json())
+			.then((data) => setStaffs([...staffs, ...data]));
+	}, []);
 
-	// TODO: get the staffs who belongs to the Deparment which user clicked to be rediected to this view
-	const staffsOfDept = staffs.filter((staff) => staff.department.id === departments[deptId].id);
+	if (staffs.length === 0) {
+		return <Loading />;
+	} else {
+		const staffsOfDept = staffs.filter((staff) => staff.departmentId === deptId);
 
-	// TODO: Render staffsList to view by map through staffsOfDept
-	const StaffList = staffsOfDept.map((staff) => {
+		const StaffList = staffsOfDept.map((staff) => {
+			return (
+				<div className="col-6 col-md-4 col-lg-2 " key={staff.id}>
+					<RenderCard item={staff} />
+				</div>
+			);
+		});
+
 		return (
-			<div className="col-6 col-md-4 col-lg-2 " key={staff.id}>
-				<RenderCard item={staff} />
+			<div className="container">
+				<div className="row">
+					<Breadcrumb className="mt-1">
+						<BreadcrumbItem>
+							<Link to={`/staff`}>Staff</Link>
+						</BreadcrumbItem>
+						<BreadcrumbItem active>
+							<Link to={"/dept"}>Department</Link>
+						</BreadcrumbItem>
+						<BreadcrumbItem>Staffs</BreadcrumbItem>
+					</Breadcrumb>
+					<hr />
+				</div>
+				<div className="row mb-4 mt-3">{StaffList}</div>
 			</div>
 		);
-	});
-
-	// return the view
-	return (
-		<div className="container">
-			<div className="row">
-				<Breadcrumb className="mt-1">
-					<BreadcrumbItem>
-						<Link to={`/staff`}>Staff</Link>
-					</BreadcrumbItem>
-					<BreadcrumbItem active>
-						<Link to={"/dept"}>Department</Link>
-					</BreadcrumbItem>
-					<BreadcrumbItem>Staffs</BreadcrumbItem>
-				</Breadcrumb>
-				<hr />
-			</div>
-			<div className="row mb-4 mt-3">{StaffList}</div>
-		</div>
-	);
+	}
 }
 
-// TODO: Connect this component to store
-export default connect(mapStateToProps)(StaffOfDepartment);
+export default withRouter(StaffOfDepartment);

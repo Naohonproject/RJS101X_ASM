@@ -3,7 +3,6 @@
 import React, { Component } from "react";
 import { Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem } from "reactstrap";
 import { NavLink } from "react-router-dom";
-
 class Header extends Component {
 	constructor(props) {
 		super(props);
@@ -29,7 +28,7 @@ class Header extends Component {
 							<Nav navbar>
 								<NavItem>
 									<NavLink to="/staff" className="nav-link">
-										<i class="fa-solid fa fa-users"></i> Staff
+										<i className="fa-solid fa fa-users"></i> Staff
 									</NavLink>
 								</NavItem>
 								<NavItem>

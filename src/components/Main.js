@@ -1,8 +1,10 @@
 /** @format */
 
-import React from "react";
-import { Route, Switch } from "react-router-dom";
-import StaffList from "./Staff";
+import React, { useEffect } from "react";
+import { Route, Switch, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+
+import Staff from "./Staff";
 import Header from "./Header";
 import Footer from "./Footer";
 import DetailStaff from "./DetailStaff";
@@ -10,22 +12,99 @@ import Department from "./Department";
 import Salary from "./Salary";
 import StaffOfDepartment from "./StaffsOfDepartment";
 
-// TODO: routing our Component to match with the URL
-function Main() {
+import {
+	fetchDepartmentsFromServer,
+	fetchStaffsFromServer,
+	fetchSalaryFromServer,
+	postStaffToServer,
+	DeleteStaffToServer,
+} from "../redux/actionCreators";
+
+function mapDispatchToProps(dispatch) {
+	return {
+		fetchStaffs: () => {
+			dispatch(fetchStaffsFromServer());
+		},
+		fetchDepartment: () => {
+			dispatch(fetchDepartmentsFromServer());
+		},
+		fetchSalary: () => {
+			dispatch(fetchSalaryFromServer());
+		},
+		postStaff: (staff) => {
+			dispatch(postStaffToServer(staff));
+		},
+		deleteStaff: (staffId) => {
+			dispatch(DeleteStaffToServer(staffId));
+		},
+	};
+}
+
+function mapStateToProps(state) {
+	return {
+		staffs: state.staffs,
+		departments: state.departments,
+		salary: state.salary,
+	};
+}
+
+function Main({
+	staffs,
+	departments,
+	salary,
+	fetchStaffs,
+	fetchDepartment,
+	fetchSalary,
+	postStaff,
+	deleteStaff,
+}) {
+	useEffect(() => {
+		fetchStaffs();
+	}, []);
+
+	useEffect(() => {
+		fetchDepartment();
+		fetchSalary();
+	}, [staffs]);
+
+	const staff = () => {
+		return (
+			<Staff
+				staffs={staffs}
+				departments={departments}
+				postStaff={postStaff}
+				deleteStaff={deleteStaff}
+			/>
+		);
+	};
+	const department = () => {
+		return <Department staffs={staffs} departments={departments} />;
+	};
+	const salaries = () => {
+		return <Salary staffs={salary} />;
+	};
+	const detailStaff = () => {
+		return <DetailStaff staffs={staffs} departments={departments} />;
+	};
+	const staffOfDepartment = () => {
+		return <StaffOfDepartment />;
+	};
+
 	return (
 		<div className="container">
 			<Header />
 			<Switch>
-				<Route exact path="/" component={StaffList}></Route>
-				<Route path="/staff/:id" component={DetailStaff} />
-				<Route path="/staff" component={StaffList} />
-				<Route path="/dept" component={Department} />
-				<Route path="/pay" component={Salary} />
-				<Route path="/staffs/:deptId" component={StaffOfDepartment} />
+				<Route exact path="/" component={staff} />
+				<Route path="/staff" component={staff} />
+				<Route path="/dept" component={department} />
+				<Route path="/pay" component={salaries} />
+				<Route path="/staffDetail/:id" component={detailStaff} />
+
+				<Route path="/staffs/:deptId" component={staffOfDepartment} />
 			</Switch>
 			<Footer />
 		</div>
 	);
 }
 
-export default Main;
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));

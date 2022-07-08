@@ -7,7 +7,11 @@ import "./App.css";
 
 //TODO: Render Main Component
 function App() {
-	return <Main />;
+	return (
+		<React.Fragment>
+			<Main />;
+		</React.Fragment>
+	);
 }
 
 export default App;
