@@ -37,6 +37,7 @@ function DetailStaff(props) {
 		const departmentName = props.departments.departments.find((dept) => dept.id === deptId).name;
 		const annualLeave = staff.annualLeave;
 		const overTime = staff.overTime;
+		const salaryScale = staff.salaryScale;
 
 		const [isModalOpen, setIsModalOpen] = useState(false);
 		const toggleModal = () => {
@@ -48,7 +49,20 @@ function DetailStaff(props) {
 		const isNumber = (val) => val && numberRegExp.test(val);
 		const valName = (val) => val && nameRegExp.test(val);
 
-		const handleUpdateStaff = (value) => {};
+		const handleUpdateStaff = (value) => {
+			const updatedStaff = {
+				name: value.name,
+				doB: value.birthDay,
+				salaryScale: Number(value.scaleSalary),
+				startDate: value.startingDate,
+				departmentId: deptId,
+				annualLeave: Number(value.ramaingDayOff),
+				overTime: Number(value.overTime),
+				image: "/assets/images/alberto.png",
+			};
+
+			setIsModalOpen(!isModalOpen);
+		};
 
 		return (
 			<React.Fragment>
@@ -201,7 +215,7 @@ function DetailStaff(props) {
 								</Label>
 								<Col md={8}>
 									<Control.text
-										defaultValue="1.1"
+										defaultValue={salaryScale}
 										model=".scaleSalary"
 										className="form-control"
 										id="scaleSalary"
@@ -230,7 +244,7 @@ function DetailStaff(props) {
 								</Label>
 								<Col md={8}>
 									<Control.text
-										defaultValue="0"
+										defaultValue={annualLeave}
 										model=".ramaingDayOff"
 										className="form-control"
 										id="ramaingDayOff"
@@ -259,7 +273,7 @@ function DetailStaff(props) {
 								</Label>
 								<Col md={8}>
 									<Control.text
-										defaultValue="0"
+										defaultValue={overTime}
 										model=".overTime"
 										className="form-control"
 										id="overTime"
