@@ -135,3 +135,26 @@ export const DeleteStaffToServer = (staffId) => (dispatch) => {
 			alert(+error.message);
 		});
 };
+
+export const updateStaff = (staffs) => ({
+	type: actionTypes.UPDATE_STAFF,
+	payload: staffs,
+});
+
+export const updateStaffToServer = (updatedStaff) => (dispatch) => {
+	fetch(baseUrl + staffsSubUrl, {
+		method: "PATCH",
+		body: JSON.stringify(updatedStaff),
+		headers: {
+			"Content-Type": "application/json",
+		},
+		credentials: "same-origin",
+	})
+		.then(handleOnFulfilled(), handleOnRejected())
+		.then((res) => res.json())
+		.then((data) => dispatch(updateStaff(data)))
+		.catch((error) => {
+			console.log(error.message);
+			alert(+error.message);
+		});
+};

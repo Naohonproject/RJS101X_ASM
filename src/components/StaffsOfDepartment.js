@@ -6,9 +6,8 @@ import { Breadcrumb, BreadcrumbItem } from "reactstrap";
 import { Link, withRouter } from "react-router-dom";
 
 import RenderCard from "./RenderCard";
-import { Loading } from "./Loading";
 
-function StaffOfDepartment({ match }) {
+function StaffOfDepartment({ match, deleteStaff }) {
 	const deptId = match.params.deptId;
 	const [staffs, setStaffs] = useState([]);
 
@@ -19,14 +18,18 @@ function StaffOfDepartment({ match }) {
 	}, []);
 
 	if (staffs.length === 0) {
-		return <Loading />;
+		return (
+			<div>
+				<h1>No STAFFS</h1>
+			</div>
+		);
 	} else {
 		const staffsOfDept = staffs.filter((staff) => staff.departmentId === deptId);
 
 		const StaffList = staffsOfDept.map((staff) => {
 			return (
 				<div className="col-6 col-md-4 col-lg-2 " key={staff.id}>
-					<RenderCard item={staff} />
+					<RenderCard item={staff} deleteStaff={deleteStaff} />
 				</div>
 			);
 		});

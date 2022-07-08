@@ -28,7 +28,7 @@ function DetailStaff(props) {
 		return <Loading />;
 	} else {
 		const urlId = props.match.params.id;
-		const staff = props.staffs.staffs[urlId];
+		const staff = props.staffs.staffs.find((staff) => staff.id == urlId);
 
 		const staffName = staff.name;
 		const staffBirthDay = dateFormat(staff.doB, "dd/mm/yyyy");
@@ -50,7 +50,11 @@ function DetailStaff(props) {
 		const valName = (val) => val && nameRegExp.test(val);
 
 		const handleUpdateStaff = (value) => {
+			const deptId = props.departments.departments.find(
+				(dept) => dept.name === value.departments
+			).id;
 			const updatedStaff = {
+				id: urlId,
 				name: value.name,
 				doB: value.birthDay,
 				salaryScale: Number(value.scaleSalary),
@@ -60,6 +64,8 @@ function DetailStaff(props) {
 				overTime: Number(value.overTime),
 				image: "/assets/images/alberto.png",
 			};
+
+			props.updateStaff(updatedStaff);
 
 			setIsModalOpen(!isModalOpen);
 		};
@@ -299,7 +305,7 @@ function DetailStaff(props) {
 							<Row className="form-group">
 								<Col md={{ size: 10, offset: 2 }}>
 									<Button type="submit" color="primary">
-										ADD
+										Update
 									</Button>
 								</Col>
 							</Row>

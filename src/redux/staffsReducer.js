@@ -12,6 +12,7 @@ export const StaffsReducer = (
 	switch (action.type) {
 		case actionTypes.ADD_STAFF:
 		case actionTypes.DELETE_STAFF:
+		case actionTypes.UPDATE_STAFF:
 			return {
 				...state,
 				staffs: action.payload,

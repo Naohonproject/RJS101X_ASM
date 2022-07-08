@@ -18,6 +18,7 @@ import {
 	fetchSalaryFromServer,
 	postStaffToServer,
 	DeleteStaffToServer,
+	updateStaffToServer,
 } from "../redux/actionCreators";
 
 function mapDispatchToProps(dispatch) {
@@ -36,6 +37,9 @@ function mapDispatchToProps(dispatch) {
 		},
 		deleteStaff: (staffId) => {
 			dispatch(DeleteStaffToServer(staffId));
+		},
+		updateStaff: (updatedStaff) => {
+			dispatch(updateStaffToServer(updatedStaff));
 		},
 	};
 }
@@ -57,6 +61,7 @@ function Main({
 	fetchSalary,
 	postStaff,
 	deleteStaff,
+	updateStaff,
 }) {
 	useEffect(() => {
 		fetchStaffs();
@@ -84,10 +89,10 @@ function Main({
 		return <Salary staffs={salary} />;
 	};
 	const detailStaff = () => {
-		return <DetailStaff staffs={staffs} departments={departments} />;
+		return <DetailStaff staffs={staffs} departments={departments} updateStaff={updateStaff} />;
 	};
 	const staffOfDepartment = () => {
-		return <StaffOfDepartment />;
+		return <StaffOfDepartment deleteStaff={deleteStaff} />;
 	};
 
 	return (
